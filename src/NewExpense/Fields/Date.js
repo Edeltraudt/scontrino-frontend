@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { Label, Card } from "./../../shared";
-import { Form, Lightswitch } from "./../../Forms";
+import { Form } from "./../../Forms";
 
 // TODO: rename
 import { Datepicker } from "./../Datepicker";

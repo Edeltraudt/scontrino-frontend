@@ -1,11 +1,11 @@
 import { transparentize } from "polished";
 
-export const bodyBackground = `linear-gradient(135deg, #E8E8ED, #FFFFFF 150%)`;
+export const bodyBackground = `linear-gradient(150deg, #F3F3F7 5%, #FFFFFF 90%)`;
 
 export const colors = {
   background: "#FFFFFF",
   borderSoft: "#F5F5F7",
-  border: "#DADAE6",
+  border: "#D1D1DB",
   inactive: "#BBBBC4",
   label: "#717180",
   headline: "#717180",

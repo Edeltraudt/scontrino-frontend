@@ -12,11 +12,11 @@ import {
   NotesField,
 } from "./Fields";
 
-import EssentialsIcon from "./../shared/icons/essentials.svg";
-import LifestyleIcon from "./../shared/icons/lifestyle.svg";
-import LuxuriesIcon from "./../shared/icons/luxuries.svg";
-import AcquisitionsIcon from "./../shared/icons/acquisitions.svg";
-import WorkIcon from "./../shared/icons/work.svg";
+import { ReactComponent as EssentialsIcon } from "./../shared/icons/essentials.svg";
+import { ReactComponent as LifestyleIcon } from "./../shared/icons/lifestyle.svg";
+import { ReactComponent as LuxuriesIcon } from "./../shared/icons/luxuries.svg";
+import { ReactComponent as AcquisitionsIcon } from "./../shared/icons/acquisitions.svg";
+import { ReactComponent as WorkIcon } from "./../shared/icons/work.svg";
 
 const Wrap = styled.form`
   display: grid;

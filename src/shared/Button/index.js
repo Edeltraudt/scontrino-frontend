@@ -13,14 +13,14 @@ export const Button = styled.button`
   color: ${colors.text};
   cursor: pointer;
   font-size: 1.125rem;
-  height: 2.4em;
+  height: 2.75rem;
   outline: 0;
-  padding: 0.625em 1.5em 0.675em;
+  padding: 0.65em 1.25em 0.675em;
   position: relative;
   transition-property: background-color, border-color, box-shadow;
   transition: 0.15s ease-out;
 
-  &:hover {
+  &:hover, &:focus {
     background-color: ${hoverBackground};
     border-color: ${hoverBackground};
   }
@@ -31,7 +31,7 @@ export const Button = styled.button`
   }
 
   &:focus {
-    box-shadow: 0 0 0 2px ${transparentize(0.5, colors.primary)};
+    box-shadow: 0 0 0 2px ${transparentize(0.5, hoverBackground)};
   }
 
   ${({ primary }) => {
@@ -44,7 +44,7 @@ export const Button = styled.button`
       background: ${colors.primary};
       color: ${colors.primaryInvert};
 
-      &:hover {
+      &:hover, &:focus {
         background-color: ${hoverBackground};
         border-color: ${hoverBackground};
       }
