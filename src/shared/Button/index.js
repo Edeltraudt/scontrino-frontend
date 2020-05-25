@@ -15,7 +15,7 @@ export const Button = styled.button`
   font-size: 1.125rem;
   height: 2.75rem;
   outline: 0;
-  padding: 0.65em 1.25em 0.675em;
+  padding: 0.65em 1.25em 0.75em;
   position: relative;
   transition-property: background-color, border-color, box-shadow;
   transition: 0.15s ease-out;
@@ -31,7 +31,7 @@ export const Button = styled.button`
   }
 
   &:focus {
-    box-shadow: 0 0 0 2px ${transparentize(0.5, hoverBackground)};
+    box-shadow: 0 0 0 3px ${transparentize(0.5, hoverBackground)};
   }
 
   ${({ primary }) => {
@@ -55,11 +55,20 @@ export const Button = styled.button`
       }
 
       &:focus {
-        box-shadow: 0 0 0 2px ${transparentize(0.5, colors.primary)};
+        box-shadow: 0 0 0 3px ${transparentize(0.5, colors.primary)};
       }
     `
     );
   }}
 
   ${({ disabled }) => disabled && `pointer-events: none; opacity: 0.5;`}
+
+  ${({ large }) =>
+    large &&
+    `
+      font-size: 1.375rem;
+      height: auto;
+      padding-left: 2em;
+      padding-right: 2em;
+    `}
 `;

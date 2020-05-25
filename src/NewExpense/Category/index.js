@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { transparentize } from "polished";
 
 import { colors } from "./../../theme";
 import { Label, Card } from "./../../shared";
@@ -11,10 +12,14 @@ const Wrap = styled(Card)`
   padding: 1.25rem 0.5rem;
   text-align: center;
   transition: 0.15s ease;
-  transition-property: background, color;
+  transition-property: background, color, box-shadow;
 
   & + & {
     margin-left: 1rem;
+  }
+
+  &:focus-within {
+    box-shadow: 0 0 0 3px ${transparentize(0.5, colors.primary)};
   }
 
   ${({ active }) =>

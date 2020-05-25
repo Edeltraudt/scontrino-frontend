@@ -21,9 +21,9 @@ const Row = styled.div`
 export const Form = { Row }
 
 
-export * from "./Checkbox";
+export * from "./HiddenInput";
 export * from "./Input";
+export * from "./Lightswitch";
 export * from "./Range";
 export * from "./Select";
-export * from "./HiddenInput";
 export * from "./Textarea";
