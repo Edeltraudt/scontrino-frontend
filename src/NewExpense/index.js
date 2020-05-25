@@ -42,7 +42,7 @@ const categories = [
 ];
 
 export const NewExpenseView = ({ props }) => {
-  const [expense, setExpense] = useState('');
+  const [expense, setExpense] = useState("");
   const [selectedCurrency, setSelectedCurrency] = useState("EUR");
   const [category, setCategory] = useState("Essentials");
   const [name, setName] = useState("");

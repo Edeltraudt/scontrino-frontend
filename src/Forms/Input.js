@@ -34,12 +34,13 @@ const Field = styled.input`
   }
 `;
 
-const Fake = styled.label`
+const Fake = styled.p`
   left: 0;
+  margin: 0;
   pointer-events: none;
   position: absolute;
   top: 0;
   width: 100%;
-`
+`;
 
 export const Input = { Wrap, Field, Fake };
