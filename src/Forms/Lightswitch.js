@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { transparentize } from "polished";
 
 import { colors } from "./../theme";
 import { Label } from "./../shared";
@@ -35,10 +36,18 @@ const FakeSwitch = styled.span`
     width: 1.5rem;
   }
 
+  *:focus + * > & {
+    box-shadow: 0 0 0 3px ${transparentize(0.5, colors.checkboxBackground)};
+  }
+
   ${({ checked }) =>
     checked &&
     `
       background-color: ${colors.primary};
+
+      *:focus + * > & {
+        box-shadow: 0 0 0 3px ${transparentize(0.5, colors.primary)};
+      }
 
       &::before { transform: translateX(1.25rem) }
     `};
