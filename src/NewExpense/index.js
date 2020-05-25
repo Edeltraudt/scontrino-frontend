@@ -34,16 +34,16 @@ const Fields = styled.div`
 `;
 
 const categories = [
-  { label: "Essentials", icon: EssentialsIcon },
-  { label: "Lifestyle", icon: LifestyleIcon },
-  { label: "Luxuries", icon: LuxuriesIcon },
-  { label: "Acquisitions", icon: AcquisitionsIcon },
-  { label: "Work", icon: WorkIcon },
+  { label: "Essentials", icon: <EssentialsIcon /> },
+  { label: "Lifestyle", icon: <LifestyleIcon /> },
+  { label: "Luxuries", icon: <LuxuriesIcon /> },
+  { label: "Acquisitions", icon: <AcquisitionsIcon /> },
+  { label: "Work", icon: <WorkIcon /> },
 ];
 
 export const NewExpenseView = ({ props }) => {
-  const [expense, setExpense] = useState("");
-  const [currency, setCurrency] = useState("EUR");
+  const [expense, setExpense] = useState('');
+  const [selectedCurrency, setSelectedCurrency] = useState("EUR");
   const [category, setCategory] = useState("Essentials");
   const [name, setName] = useState("");
   const [date, setDate] = useState(new Date());
@@ -55,9 +55,12 @@ export const NewExpenseView = ({ props }) => {
       <FormHeadline>New Expense</FormHeadline>
       <Fields>
         <ExpenseField
-          onExpenseChange={setExpense}
-          onCurrencyChange={setCurrency}
-          currency={currency}
+          onExpenseChange={(value) => {
+            console.log("Update expense to", value);
+            setExpense(value);
+          }}
+          onCurrencyChange={setSelectedCurrency}
+          currency={selectedCurrency}
           expense={expense}
         />
 
@@ -71,7 +74,7 @@ export const NewExpenseView = ({ props }) => {
 
         <DateField date={date} onChange={setDate} />
 
-        <GroupField onChange={setShared} />
+        <GroupField shared={shared} onChange={setShared} />
 
         <NotesField notes={notes} onChange={setNotes} />
       </Fields>

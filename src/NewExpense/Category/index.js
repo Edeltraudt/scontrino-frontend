@@ -6,10 +6,8 @@ import { Label, Card } from "./../../shared";
 import { HiddenInput } from "./../../Forms";
 
 const Wrap = styled(Card)`
+  color: ${colors.label};
   flex: 0 0 calc(20% - ${4 / 5}rem);
-  /*flex: 1;
-  width: auto;
-  max-width: none;*/
   padding: 1.25rem 0.5rem;
   text-align: center;
   transition: 0.15s ease;
@@ -29,7 +27,15 @@ const Wrap = styled(Card)`
 
 const CategoryLabel = styled(Label)`
   color: inherit;
+  font-weight: 400;
 `;
+
+const Icon = styled.span`
+  display: block;
+  height: 2rem;
+  margin: 0.75rem auto 1.25rem;
+  width: 2rem;
+`
 
 export const Category = ({ label, icon, checked, id, name, onChange }) => {
   return (
@@ -42,7 +48,7 @@ export const Category = ({ label, icon, checked, id, name, onChange }) => {
         onChange={onChange}
       />
       <CategoryLabel htmlFor={id} expand>
-        {/* TODO: Icon */}
+        <Icon>{icon}</Icon>
         {label}
       </CategoryLabel>
     </Wrap>

@@ -20,6 +20,7 @@ export const CategoryField = ({ categories, selected, onChange }) => {
             onChange(category.label);
           }}
           label={category.label}
+          icon={category.icon}
           key={category.label}
         />
       ))}
