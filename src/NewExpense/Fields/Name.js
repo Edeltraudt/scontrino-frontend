@@ -15,7 +15,7 @@ export const NameField = ({ name, onChange }) => {
             placeholder="e.g. eating out"
             id="name"
             defaultValue={name}
-            onChange={onChange}
+            onChange={(e) => onChange(e.target.value)}
           />
         </Input.Wrap>
       </Form.Row>
