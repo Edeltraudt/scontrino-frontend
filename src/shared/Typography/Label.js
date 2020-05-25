@@ -1,0 +1,26 @@
+import styled from "styled-components";
+
+import { colors } from "./../../theme";
+
+export const Label = styled.label`
+  color: ${colors.label};
+  cursor: pointer;
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1;
+  margin: 0 0 0.25em;
+
+  /* Expand the click area to the next relative parent */
+  ${({ expand }) =>
+    expand &&
+    `
+      &::after {
+        bottom: 0;
+        content: '';
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+    `}
+`;
