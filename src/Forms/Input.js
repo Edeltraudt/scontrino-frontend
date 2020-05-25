@@ -30,7 +30,16 @@ const Field = styled.input`
 
   &::placeholder {
     color: ${colors.inactive};
+    opacity: 1;
   }
 `;
 
-export const Input = { Wrap, Field };
+const Fake = styled.label`
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  width: 100%;
+`
+
+export const Input = { Wrap, Field, Fake };

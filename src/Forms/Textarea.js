@@ -18,6 +18,7 @@ const Field = styled.textarea`
 
   &::placeholder {
     color: ${colors.inactive};
+    opacity: 1;
   }
 `;
 
