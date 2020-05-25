@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { transparentize } from "polished";
 
 import { colors } from "./../theme";
 
@@ -33,6 +34,7 @@ const RangeInput = styled.input`
   margin-top: -${thumbSize / 2}rem;
   padding: ${thumbSize / 2}rem 0;
   position: relative;
+  transition: 0.15s ease box-shadow;
   width: 100%;
 
   /* Webkit browsers */
@@ -44,8 +46,11 @@ const RangeInput = styled.input`
   &::-webkit-slider-thumb {
     ${thumb};
     -webkit-appearance: none;
-
     margin-top: ${thumbSize * -0.5}rem;
+  }
+
+  &:focus::-webkit-slider-thumb {
+    box-shadow: 0 0 0 3px ${transparentize(0.5, colors.primary)};
   }
 
   /* Firefox */
@@ -61,6 +66,10 @@ const RangeInput = styled.input`
 
   &::-moz-range-thumb {
     ${thumb};
+  }
+
+  &:focus::-moz-range-thumb {
+    box-shadow: 0 0 0 3px ${transparentize(0.5, colors.primary)};
   }
 `;
 
@@ -95,7 +104,11 @@ export const Range = ({ minLabel, maxLabel, onChange, ...props }) => {
 
   return (
     <Wrap>
-      <RangeInput type="range" onChange={onChange} {...props} />
+      <RangeInput
+        type="range"
+        onChange={(e) => onChange(e.target.value)}
+        {...props}
+      />
       <Scale>
         {lineArray.map((_, index) => (
           <Line key={index} />
