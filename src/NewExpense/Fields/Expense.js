@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { Card, Label, Currency } from "./../../shared";
 import { Input, Select, Form } from "./../../Forms";
 
-import { colors } from "./../../theme";
 import { useRunAfterUpdate } from "./../../hooks";
 
 const HiddenInput = styled(Input.Field)`
@@ -21,11 +20,13 @@ export const ExpenseField = ({
 }) => {
   const [selectedCurrency, setSelectedCurrency] = useState(props.currency);
   const [amount, setAmount] = useState("");
+  const [isInputActive, setIsInputActive] = useState(true);
   const [cursorPosition, setCursorPosition] = useState(null);
   const inputElement = useRef(null);
 
   const handleChange = (e) => {
     setAmount(e.target.value);
+    onExpenseChange(e.target.value);
     setCursorPosition(e.target.selectionStart);
   };
 
@@ -66,7 +67,11 @@ export const ExpenseField = ({
 
         <Input.Wrap huge>
           <Input.Fake htmlFor="expense">
-            <Currency cursorPosition={cursorPosition} amount={amount} pad />
+            <Currency
+              cursorPosition={cursorPosition}
+              amount={amount}
+              active={isInputActive}
+            />
           </Input.Fake>
 
           <HiddenInput
@@ -75,6 +80,8 @@ export const ExpenseField = ({
             placeholder={"00.00"}
             onChange={handleChange}
             onKeyUp={handleKeyPress}
+            onFocus={(e) => setIsInputActive(true)}
+            onBlur={(e) => setIsInputActive(false)}
             value={amount}
             ref={inputElement}
           />
