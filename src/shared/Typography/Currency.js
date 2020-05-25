@@ -22,7 +22,7 @@ const blink = keyframes`
    90% { opacity: 0; }
 `;
 
-const Cursor = styled.span`
+const Char = styled.span`
   position: relative;
 
   &::after {
@@ -39,8 +39,8 @@ const Cursor = styled.span`
     z-index: -1;
   }
 
-  ${({ active }) =>
-    !active &&
+  ${({ hasCursor }) =>
+    !hasCursor &&
     `
       &::after {
         content: none;
@@ -67,9 +67,12 @@ const {
   return { decimalSeparator, thousandsSeparator };
 })();
 
-export const Currency = ({ pad, ...props }) => {
-  const { amount: initialAmount, cursorPosition = 0 } = props;
-
+export const Currency = ({
+  active,
+  amount: initialAmount,
+  cursorPosition = 0,
+  ...props
+}) => {
   const value = parseFloat(initialAmount) / 100;
   const valueLength = initialAmount.length;
 
@@ -111,11 +114,11 @@ export const Currency = ({ pad, ...props }) => {
 
   return (
     <Wrap>
-      <Cursor active={atBeginning} />
+      <Char hasCursor={active && atBeginning} />
       {[...full].map((char, index) => (
-        <Cursor key={index} active={index === leftOffset}>
+        <Char key={index} hasCursor={active && index === leftOffset}>
           {char}
-        </Cursor>
+        </Char>
       ))}
     </Wrap>
   );
