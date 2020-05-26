@@ -51,12 +51,15 @@ const categories = [
 ];
 
 export const NewExpenseView = ({ props }) => {
+  const requestDelay = 750;
+
   const [isLoading, setIsLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
+  const [id, setId] = useState(null);
 
-  let id = null;
-  let timeout = null;
+  let requiredTimeout = null;
+  let extraTimeout = null;
 
   let cost = 0.0;
   let currency = "EUR";
@@ -66,6 +69,31 @@ export const NewExpenseView = ({ props }) => {
   let date = new Date();
   let sharing = parseFloat(0.01);
   let notes = "";
+
+  const getBody = () => ({
+    id,
+    cost,
+    currency,
+    category,
+    // TODO: remove string modifications once API allows non-lowercase
+    name: name.toLowerCase().replace(" ", ""),
+    date: date.toISOString().slice(0, 10),
+    sharing,
+    notes,
+  });
+
+  const handleSuccess = (res) => {
+    window.setTimeout(() => {
+      setIsLoading(false);
+      setSuccess(true);
+      setId(res.data.data.id);
+    }, 200);
+  };
+
+  const handleError = (res) => {
+    setIsLoading(false);
+    setError(res.error || "An unknown error occurred.");
+  };
 
   const handleSubmit = (event) => {
     if (event && event.preventDefault) {
@@ -77,27 +105,21 @@ export const NewExpenseView = ({ props }) => {
     setError("");
 
     api
-      .post("/expenses", {
-        cost,
-        currency,
-        category,
-        // TODO: remove string modifications once API allows non-lowercase
-        name: name.toLowerCase().replace(" ", ""),
-        date: date.toISOString().slice(0, 10),
-        sharing,
-        notes,
-      })
-      .then((res) => {
-        window.setTimeout(() => {
-          setIsLoading(false);
-          setSuccess(true);
-          id = res.data.id;
-        }, 200)
-      })
-      .catch((res) => {
-        setIsLoading(false);
-        setError(res.error || "An unknown error occurred.");
-      });
+      .post("/expenses", getBody())
+      .then(handleSuccess)
+      .catch(handleError);
+  };
+
+  const handleUpdate = () => {
+    if (id) {
+      window.clearTimeout(extraTimeout);
+      extraTimeout = window.setTimeout(() => {
+        api
+          .patch("/expenses", getBody())
+          .then(handleSuccess)
+          .catch(handleError);
+      }, requestDelay);
+    }
   };
 
   return (
@@ -127,15 +149,15 @@ export const NewExpenseView = ({ props }) => {
           name={name}
           onChange={(value) => {
             name = value;
-            window.clearInterval(timeout);
-            timeout = window.setTimeout(handleSubmit, 750);
+            window.clearInterval(requiredTimeout);
+            requiredTimeout = window.setTimeout(handleSubmit, requestDelay);
           }}
         />
 
         <StatusField
-          isLoading={!id && isLoading}
+          isLoading={!id && isLoading && !success}
           success={success}
-          error={error}
+          error={!id && error}
         />
 
         {/* TODO: send patch-requests for each modification */}
@@ -143,6 +165,7 @@ export const NewExpenseView = ({ props }) => {
           date={date}
           onChange={(value) => {
             date = value;
+            handleUpdate();
           }}
         />
 
@@ -150,6 +173,7 @@ export const NewExpenseView = ({ props }) => {
           sharing={sharing}
           onChange={(value) => {
             sharing = parseFloat(value);
+            handleUpdate();
           }}
         />
 
@@ -157,6 +181,7 @@ export const NewExpenseView = ({ props }) => {
           notes={notes}
           onChange={(value) => {
             notes = value;
+            handleUpdate();
           }}
         />
 
