@@ -51,7 +51,7 @@ const categories = [
 export const NewExpenseView = ({ props }) => {
   const [expense, setExpense] = useState("");
   const [selectedCurrency, setSelectedCurrency] = useState("EUR");
-  const [category, setCategory] = useState(null);
+  const [category, setCategory] = useState(categories[0].label);
   const [name, setName] = useState("");
   const [date, setDate] = useState(new Date());
   const [shared, setShared] = useState(0.0);

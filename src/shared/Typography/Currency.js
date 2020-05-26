@@ -41,6 +41,8 @@ const Char = styled.span`
         content: none;
       }
     `}
+
+  ${({ padding }) => padding && `color: ${colors.inactive}`}
 `;
 
 export const Currency = ({
@@ -92,7 +94,11 @@ export const Currency = ({
     <Wrap>
       <Char hasCursor={active && atBeginning} />
       {[...full].map((char, index) => (
-        <Char key={index} hasCursor={active && index === leftOffset}>
+        <Char
+          key={index}
+          hasCursor={active && index === leftOffset}
+          padding={index < padded.length}
+        >
           {char}
         </Char>
       ))}
