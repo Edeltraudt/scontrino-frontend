@@ -56,13 +56,15 @@ export const NewExpenseView = ({ props }) => {
   const [error, setError] = useState("");
 
   let id = null;
+  let timeout = null;
+
   let cost = 0.0;
   let currency = "EUR";
-  let category = categories[0].label;
+  let category = categories[0].label.toLowerCase();
   let name = "";
 
   let date = new Date();
-  let shared = 0.0;
+  let sharing = parseFloat(0.01);
   let notes = "";
 
   const handleSubmit = (event) => {
@@ -78,19 +80,23 @@ export const NewExpenseView = ({ props }) => {
       .post("/expenses", {
         cost,
         currency,
-        category: category.toLowerCase(),
-        name,
+        category,
+        // TODO: remove string modifications once API allows non-lowercase
+        name: name.toLowerCase().replace(" ", ""),
         date: date.toISOString().slice(0, 10),
-        sharing: parseFloat(shared),
+        sharing,
         notes,
       })
       .then((res) => {
-        setIsLoading(false);
-        id = res.data.id;
+        window.setTimeout(() => {
+          setIsLoading(false);
+          setSuccess(true);
+          id = res.data.id;
+        }, 200)
       })
       .catch((res) => {
         setIsLoading(false);
-        setError(res.error || "An unknown error occurred.")
+        setError(res.error || "An unknown error occurred.");
       });
   };
 
@@ -121,6 +127,8 @@ export const NewExpenseView = ({ props }) => {
           name={name}
           onChange={(value) => {
             name = value;
+            window.clearInterval(timeout);
+            timeout = window.setTimeout(handleSubmit, 750);
           }}
         />
 
@@ -130,6 +138,7 @@ export const NewExpenseView = ({ props }) => {
           error={error}
         />
 
+        {/* TODO: send patch-requests for each modification */}
         <DateField
           date={date}
           onChange={(value) => {
@@ -138,9 +147,9 @@ export const NewExpenseView = ({ props }) => {
         />
 
         <GroupField
-          shared={shared}
+          sharing={sharing}
           onChange={(value) => {
-            shared = value;
+            sharing = parseFloat(value);
           }}
         />
 
@@ -152,9 +161,6 @@ export const NewExpenseView = ({ props }) => {
         />
 
         <ButtonWrap>
-          <Button type="submit" primary alignCenter>
-            Save
-          </Button>
           <Button type="button" danger alignCenter>
             Scratch all that
           </Button>

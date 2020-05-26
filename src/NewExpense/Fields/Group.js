@@ -3,26 +3,26 @@ import React, { useState } from "react";
 import { Card } from "./../../shared";
 import { Form, Range, Lightswitch } from "./../../Forms";
 
-export const GroupField = ({ onChange, ...props }) => {
-  const [isShared, setIsShared] = useState(false);
+export const GroupField = ({ onChange, sharing, ...props }) => {
+  const [isSharing, setIsSharing] = useState(false);
   const [value, setValue] = useState(0);
 
   return (
     <Card chained>
       <Form.Row>
         <Lightswitch
-          id="shared"
+          id="sharing"
           label="Did you share this expense with your group?"
           onChange={(state) => {
-            const sharedValue = state ? 0.5 : 0;
+            const sharingValue = state ? 0.5 : 0;
 
-            setIsShared(state);
-            setValue(sharedValue);
-            onChange(sharedValue);
+            setIsSharing(state);
+            setValue(sharingValue);
+            onChange(sharingValue);
           }}
         />
       </Form.Row>
-      {isShared && (
+      {isSharing && (
         <Form.Row>
           <Range
             min="0"

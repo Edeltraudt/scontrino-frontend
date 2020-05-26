@@ -26,9 +26,11 @@ const FillerLine = styled.span`
   opacity: 0;
   position: absolute;
   top: -0.75rem;
-  transition: 0.15s ease opacity;
+  transform: scaleY(0.4);
+  transition: 0.15s ease;
+  transition-property: transform, opacity;
 
-  ${({active}) => active && `opacity: 1`}
+  ${({active}) => active && `opacity: 1; transform: scaleY(1)`}
 `;
 
 const fadeIn = keyframes`
@@ -37,8 +39,9 @@ const fadeIn = keyframes`
 `;
 
 const MessageWrap = styled.div`
-  animation: ${fadeIn} 0.25s ease forwards;
+  animation: ${fadeIn} 0.15s ease forwards;
   opacity: 0;
+  position: relative;
 `;
 
 export const StatusField = ({

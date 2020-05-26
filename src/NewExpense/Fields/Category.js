@@ -14,7 +14,7 @@ export const CategoryField = ({ categories, selected, onChange }) => {
         <Category
           name="category"
           id={`cat-${category.label.toLowerCase()}`}
-          checked={selectedCategory === category.label}
+          checked={selectedCategory.toUpperCase() === category.label.toUpperCase()}
           onChange={() => {
             setSelectedCategory(category.label);
             onChange(category.label);
