@@ -10,6 +10,21 @@ export const Label = styled.label`
   line-height: 1;
   margin: 0 0 0.25em;
 
+  svg {
+    display: inline-block;
+    opacity: 0.625;
+    margin-top: -2px;
+
+    &:not(:only-child) {
+      vertical-align: middle;
+    }
+
+    &:not(:last-child) {
+      margin-right: 0.75em;
+    }
+  }
+
+
   /* Expand the click area to the next relative parent */
   ${({ expand }) =>
     expand &&
