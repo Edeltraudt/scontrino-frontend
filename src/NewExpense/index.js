@@ -12,6 +12,7 @@ import {
   GroupField,
   NameField,
   NotesField,
+  StatusField,
 } from "./Fields";
 
 import { ReactComponent as EssentialsIcon } from "./../shared/icons/essentials.svg";
@@ -38,6 +39,7 @@ const Fields = styled.div`
 const ButtonWrap = styled.div`
   display: flex;
   justify-content: center;
+  margin-top: 4rem;
 `;
 
 const categories = [
@@ -49,31 +51,47 @@ const categories = [
 ];
 
 export const NewExpenseView = ({ props }) => {
-  const [expense, setExpense] = useState("");
-  const [selectedCurrency, setSelectedCurrency] = useState("EUR");
-  const [category, setCategory] = useState(categories[0].label);
-  const [name, setName] = useState("");
-  const [date, setDate] = useState(new Date());
-  const [shared, setShared] = useState(0.0);
-  const [notes, setNotes] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
+
+  let id = null;
+  let cost = 0.0;
+  let currency = "EUR";
+  let category = categories[0].label;
+  let name = "";
+
+  let date = new Date();
+  let shared = 0.0;
+  let notes = "";
 
   const handleSubmit = (event) => {
     if (event && event.preventDefault) {
       event.preventDefault();
     }
 
+    setIsLoading(true);
+    setSuccess(false);
+    setError("");
+
     api
       .post("/expenses", {
-        cost: parseFloat(expense) / 100,
+        cost,
+        currency,
         category: category.toLowerCase(),
         name,
         date: date.toISOString().slice(0, 10),
         sharing: parseFloat(shared),
         notes,
-        currency: selectedCurrency,
       })
-      .then(console.log)
-      .catch(console.error);
+      .then((res) => {
+        setIsLoading(false);
+        id = res.data.id;
+      })
+      .catch((res) => {
+        setIsLoading(false);
+        setError(res.error || "An unknown error occurred.")
+      });
   };
 
   return (
@@ -82,31 +100,63 @@ export const NewExpenseView = ({ props }) => {
       <Fields>
         <ExpenseField
           onExpenseChange={(value) => {
-            console.log("Update expense to", value);
-            setExpense(value);
+            cost = value;
           }}
-          onCurrencyChange={setSelectedCurrency}
-          currency={selectedCurrency}
-          expense={expense}
+          onCurrencyChange={(value) => {
+            currency = value;
+          }}
+          currency={currency}
+          expense={cost}
         />
 
         <CategoryField
-          onChange={setCategory}
+          onChange={(value) => {
+            category = value.toLowercase();
+          }}
           categories={categories}
           selected={category}
         />
 
-        <NameField name={name} onChange={setName} />
+        <NameField
+          name={name}
+          onChange={(value) => {
+            name = value;
+          }}
+        />
 
-        <DateField date={date} onChange={setDate} />
+        <StatusField
+          isLoading={!id && isLoading}
+          success={success}
+          error={error}
+        />
 
-        <GroupField shared={shared} onChange={setShared} />
+        <DateField
+          date={date}
+          onChange={(value) => {
+            date = value;
+          }}
+        />
 
-        <NotesField notes={notes} onChange={setNotes} />
+        <GroupField
+          shared={shared}
+          onChange={(value) => {
+            shared = value;
+          }}
+        />
+
+        <NotesField
+          notes={notes}
+          onChange={(value) => {
+            notes = value;
+          }}
+        />
 
         <ButtonWrap>
-          <Button type="submit" primary large alignCenter>
-            Save Expense
+          <Button type="submit" primary alignCenter>
+            Save
+          </Button>
+          <Button type="button" danger alignCenter>
+            Scratch all that
           </Button>
         </ButtonWrap>
       </Fields>

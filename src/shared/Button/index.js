@@ -13,9 +13,8 @@ export const Button = styled.button`
   color: ${colors.text};
   cursor: pointer;
   font-size: 1.125rem;
-  height: 2.75rem;
   outline: 0;
-  padding: 0.65em 1.25em 0.75em;
+  padding: 0.75em 1.5em 0.8em;
   position: relative;
   transition-property: background-color, border-color, box-shadow;
   transition: 0.15s ease-out;
@@ -33,6 +32,23 @@ export const Button = styled.button`
   &:focus {
     box-shadow: 0 0 0 3px ${transparentize(0.5, hoverBackground)};
   }
+
+  & + & {
+    margin-left: 1rem;
+  }
+
+  ${({ disabled }) => disabled && `pointer-events: none; opacity: 0.5;`}
+
+
+  ${({ large }) =>
+    large &&
+    `
+      font-size: 1.375rem;
+      height: auto;
+      padding-left: 2em;
+      padding-right: 2em;
+    `}
+
 
   ${({ primary }) => {
     const hoverBackground = saturate(0.05, lighten(0.025, colors.primary));
@@ -61,14 +77,31 @@ export const Button = styled.button`
     );
   }}
 
-  ${({ disabled }) => disabled && `pointer-events: none; opacity: 0.5;`}
 
-  ${({ large }) =>
-    large &&
+  ${({ danger }) => {
+    const hoverBackground = saturate(0.05, lighten(0.025, colors.dangerButton));
+    const activeBackground = saturate(0.05, darken(0.05, colors.dangerButton));
+
+    return (
+      danger &&
+      `
+      background: ${colors.dangerButton};
+      color: ${colors.dangerButtonText};
+
+      &:hover, &:focus {
+        background-color: ${hoverBackground};
+        border-color: ${hoverBackground};
+      }
+
+      &:active {
+        background-color: ${activeBackground};
+        border-color: ${activeBackground};
+      }
+
+      &:focus {
+        box-shadow: 0 0 0 3px ${transparentize(0.5, colors.dangerButton)};
+      }
     `
-      font-size: 1.375rem;
-      height: auto;
-      padding-left: 2em;
-      padding-right: 2em;
-    `}
+    );
+  }}
 `;

@@ -15,6 +15,11 @@ export const colors = {
 
   primary: "#228B5A",
   primaryInvert: "#FFFFFF",
+
+  danger: "#C33B3B",
+  dangerInvert: "#FFFFFF",
+  dangerButton: '#F0C8CE',
+  dangerButtonText: '#9F2739',
 };
 
 export const base = {
