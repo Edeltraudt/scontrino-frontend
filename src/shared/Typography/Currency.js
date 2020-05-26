@@ -1,19 +1,14 @@
-import React, { useState, useRef } from "react";
-import styled, { css, keyframes } from "styled-components";
+import React from "react";
+import styled, { keyframes } from "styled-components";
 
 import { colors } from "./../../theme";
+import { decimalSeparator } from "./../../utility/currency";
 
 const Wrap = styled.span`
   font-variant-numeric: tabular-nums;
   position: relative;
   z-index: 1;
 `;
-
-const Padded = styled.span`
-  color: ${colors.inactive};
-`;
-
-const Value = styled.span``;
 
 const blink = keyframes`
     0% { opacity: 1; }
@@ -47,25 +42,6 @@ const Char = styled.span`
       }
     `}
 `;
-
-const {
-  decimalSeparator,
-  thousandsSeparator,
-} = (function getNumberSeparators() {
-  // convert a number formatted according to locale
-  const str = parseFloat(1234.56).toLocaleString();
-  let decimalSeparator = ".";
-  let thousandsSeparator = "";
-
-  // if the resulting number does not contain previous number
-  // (i.e. in some Arabic formats), return defaults
-  if (str.match("1")) {
-    decimalSeparator = str.replace(/.*4(.*)5.*/, "$1");
-    thousandsSeparator = str.replace(/.*1(.*)2.*/, "$1");
-  }
-
-  return { decimalSeparator, thousandsSeparator };
-})();
 
 export const Currency = ({
   active,

@@ -4,8 +4,6 @@ import styled from "styled-components";
 import { Card, Label, Currency } from "./../../shared";
 import { Input, Select, Form } from "./../../Forms";
 
-import { useRunAfterUpdate } from "./../../hooks";
-
 const HiddenInput = styled(Input.Field)`
   &,
   &::placeholder {
@@ -36,6 +34,7 @@ export const ExpenseField = ({
       // falls through
       case 39:
         setCursorPosition(e.target.selectionStart);
+        break;
       default:
         return;
     }

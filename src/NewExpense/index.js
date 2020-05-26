@@ -51,14 +51,16 @@ const categories = [
 export const NewExpenseView = ({ props }) => {
   const [expense, setExpense] = useState("");
   const [selectedCurrency, setSelectedCurrency] = useState("EUR");
-  const [category, setCategory] = useState("Essentials");
+  const [category, setCategory] = useState(null);
   const [name, setName] = useState("");
   const [date, setDate] = useState(new Date());
-  const [shared, setShared] = useState(0.5);
+  const [shared, setShared] = useState(0.0);
   const [notes, setNotes] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = (event) => {
+    if (event && event.preventDefault) {
+      event.preventDefault();
+    }
 
     api
       .post("/expenses", {
