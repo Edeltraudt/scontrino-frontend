@@ -25,7 +25,7 @@ export const Card = styled.div`
           display: block;
           height: 0.75rem;
           left: 50%;
-          margin: 0 0 0.75rem -1px;
+          margin: 0 0 0.75rem;
           position: absolute;
           width: 1px;
         }
@@ -33,12 +33,14 @@ export const Card = styled.div`
     `}
 
   /* Flat card just serves as a wrapper */
-  ${({ flat }) =>
-    flat &&
+  ${({ pure }) =>
+    pure &&
     `
       background: transparent;
       box-shadow: none;
       display: flex;
+      flex-flow: row wrap;
+      margin-bottom: ${0.75 * 3 + 0.25}rem;
       padding: 0;
     `}
 `;

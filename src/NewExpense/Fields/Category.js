@@ -9,7 +9,7 @@ export const CategoryField = ({ categories, selected, onChange }) => {
   const [selectedCategory, setSelectedCategory] = useState(selected);
 
   return (
-    <Card flat chained>
+    <Card pure chained>
       {categories.map((category) => (
         <Category
           name="category"
