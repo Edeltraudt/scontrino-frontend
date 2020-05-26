@@ -111,7 +111,7 @@ export const NewExpenseView = ({ props }) => {
 
         <CategoryField
           onChange={(value) => {
-            category = value.toLowercase();
+            category = value.toLowerCase();
           }}
           categories={categories}
           selected={category}
