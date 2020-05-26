@@ -33,6 +33,10 @@ const Wrap = styled(Card)`
 const CategoryLabel = styled(Label)`
   color: inherit;
   font-weight: 400;
+
+  svg {
+    opacity: 1;
+  }
 `;
 
 const Icon = styled.span`
