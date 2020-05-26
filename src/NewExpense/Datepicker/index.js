@@ -29,6 +29,12 @@ const RelativeValue = styled.span`
   margin-right: 0.25em;
 `;
 
+const ArrowButton = styled(Button)`
+  font-size: 0.9rem;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+`
+
 const ArrowIcon = styled.span`
   display: flex;
   height: 0.875rem;
@@ -63,7 +69,7 @@ export const Datepicker = ({ id, onChange, ...props }) => {
 
   return (
     <Wrap>
-      <Button
+      <ArrowButton
         type="button"
         onClick={handlePreviousDayClick}
         aria-label="Select previous day"
@@ -71,14 +77,14 @@ export const Datepicker = ({ id, onChange, ...props }) => {
         <ArrowIcon>
           <ArrowLeftIcon />
         </ArrowIcon>
-      </Button>
+      </ArrowButton>
 
       <Value>
         <RelativeValue>{time.getRelativeDateString(date)},</RelativeValue>
         {time.getDateString(date)}
       </Value>
 
-      <Button
+      <ArrowButton
         type="button"
         onClick={handleNextDayClick}
         disabled={time.isToday(date)}
@@ -87,7 +93,7 @@ export const Datepicker = ({ id, onChange, ...props }) => {
         <ArrowIcon>
           <ArrowRightIcon />
         </ArrowIcon>
-      </Button>
+      </ArrowButton>
     </Wrap>
   );
 };

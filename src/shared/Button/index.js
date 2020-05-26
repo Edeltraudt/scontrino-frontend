@@ -14,7 +14,7 @@ export const Button = styled.button`
   cursor: pointer;
   font-size: 1.125rem;
   outline: 0;
-  padding: 0.75em 1.5em 0.8em;
+  padding: 1em 2em 1.125em;
   position: relative;
   transition-property: background-color, border-color, box-shadow;
   transition: 0.15s ease-out;
@@ -40,14 +40,7 @@ export const Button = styled.button`
   ${({ disabled }) => disabled && `pointer-events: none; opacity: 0.5;`}
 
 
-  ${({ large }) =>
-    large &&
-    `
-      font-size: 1.375rem;
-      height: auto;
-      padding-left: 2em;
-      padding-right: 2em;
-    `}
+  ${({ large }) => large && `font-size: 1.375rem;`}
 
 
   ${({ primary }) => {
