@@ -16,22 +16,32 @@ export const ExpenseField = ({
   onCurrencyChange,
   ...props
 }) => {
+  const [isInputActive, setIsInputActive] = useState(true);
+  const [errorPlayState, setErrorPlayState] = useState(false);
+
   const [selectedCurrency, setSelectedCurrency] = useState(props.currency);
   const [amount, setAmount] = useState("");
-  const [isInputActive, setIsInputActive] = useState(true);
   const [cursorPosition, setCursorPosition] = useState(null);
+
   const inputElement = useRef(null);
 
   const handleChange = (e) => {
-    setAmount(e.target.value);
-    onExpenseChange(e.target.value);
-    setCursorPosition(e.target.selectionStart);
+    if (/^[0-9]*$/g.test(e.target.value)) {
+      setAmount(e.target.value);
+      onExpenseChange(parseFloat(e.target.value) / 100);
+      setCursorPosition(e.target.selectionStart);
+    } else {
+      setErrorPlayState(true);
+
+      window.setTimeout(() => {
+        setErrorPlayState(false);
+      }, 300);
+    }
   };
 
   const handleKeyPress = (e) => {
     switch (e.keyCode) {
       case 37:
-      // falls through
       case 39:
         setCursorPosition(e.target.selectionStart);
         break;
@@ -70,6 +80,7 @@ export const ExpenseField = ({
               cursorPosition={cursorPosition}
               amount={amount}
               active={isInputActive}
+              shake={errorPlayState}
             />
           </Input.Fake>
 

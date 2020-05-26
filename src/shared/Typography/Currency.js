@@ -1,27 +1,28 @@
 import React from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 
-import { colors } from "./../../theme";
+import { colors, animations } from "./../../theme";
 import { decimalSeparator } from "./../../utility/currency";
 
 const Wrap = styled.span`
+  animation: ${animations.shake} 0.15s ease infinite paused;
+  display: block;
   font-variant-numeric: tabular-nums;
   position: relative;
   z-index: 1;
-`;
 
-const blink = keyframes`
-    0% { opacity: 1; }
-   50% { opacity: 1; }
-   60% { opacity: 0; }
-   90% { opacity: 0; }
+  ${({ shake }) =>
+    shake &&
+    `
+    animation-play-state: running;
+  `}
 `;
 
 const Char = styled.span`
   position: relative;
 
   &::after {
-    animation: ${blink} 1.125s infinite;
+    animation: ${animations.blink} 1.125s infinite;
     background: ${colors.inactive};
     bottom: 0;
     content: "";
@@ -47,6 +48,7 @@ const Char = styled.span`
 
 export const Currency = ({
   active,
+  shake,
   amount: initialAmount,
   cursorPosition = 0,
   ...props
@@ -91,7 +93,7 @@ export const Currency = ({
   }
 
   return (
-    <Wrap>
+    <Wrap shake={shake}>
       <Char hasCursor={active && atBeginning} />
       {[...full].map((char, index) => (
         <Char
