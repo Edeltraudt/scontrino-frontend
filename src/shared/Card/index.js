@@ -1,8 +1,9 @@
+import React from "react";
 import styled from "styled-components";
 
 import { base, colors } from "./../../theme";
 
-export const Card = styled.div`
+export const CardBox = styled.div`
   background: ${colors.background};
   border-radius: ${base.radius};
   margin: auto;
@@ -44,3 +45,34 @@ export const Card = styled.div`
       padding: 0;
     `}
 `;
+
+const SuccessIcon = styled.span`
+  background: ${colors.success};
+  border-radius: 50%;
+  color: ${colors.successInvert};
+  display: flex;
+  font-size: 2rem;
+  height: 1em;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  width: 1em;
+
+  &::before {
+    content: '';
+    border-bottom: 0.075em solid;
+    border-left: 0.075em solid;
+    height: 0.15em;
+    transform: translateY(-1px) rotate(-45deg);
+    content: '';
+    margin: auto;
+    width: 0.4em;
+  }
+`;
+
+export const Card = ({ active, chained, pure, success, children }) => (
+  <CardBox active={active} chained={chained} pure={pure}>
+    {children}
+    {success && <SuccessIcon />}
+  </CardBox>
+);

@@ -16,6 +16,9 @@ export const colors = {
   primary: "#228B5A",
   primaryInvert: "#FFFFFF",
 
+  success: "#228B5A",
+  successInvert: "#FFFFFF",
+
   danger: "#C33B3B",
   dangerInvert: "#FFFFFF",
   dangerButton: '#F0C8CE',

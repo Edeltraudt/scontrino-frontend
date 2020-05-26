@@ -12,6 +12,7 @@ const HiddenInput = styled(Input.Field)`
 `;
 
 export const ExpenseField = ({
+  success,
   onExpenseChange,
   onCurrencyChange,
   ...props
@@ -55,15 +56,17 @@ export const ExpenseField = ({
   };
 
   useEffect(() => {
-    inputElement.current.focus();
+    if (inputElement.current) {
+      inputElement.current.focus();
+    }
   }, []);
 
   useEffect(() => {
     setAmount(props.expense);
-  }, [props.expense])
+  }, [props.expense]);
 
   return (
-    <Card active chained>
+    <Card active chained success={success}>
       <Label htmlFor="expense" expand>
         How much did you spend?
       </Label>

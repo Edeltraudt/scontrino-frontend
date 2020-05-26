@@ -64,7 +64,7 @@ export const StatusField = ({
               Saved!
             </Message>
             <Message centered>
-              You can either ditch or adjust some details below.
+              Adjust further details below. We've filled them with good defaults for you.
             </Message>
           </MessageWrap>
         )}

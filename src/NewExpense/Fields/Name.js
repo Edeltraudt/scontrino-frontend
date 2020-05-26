@@ -3,9 +3,9 @@ import React from "react";
 import { Label, Card } from "./../../shared";
 import { Input, Form } from "./../../Forms";
 
-export const NameField = ({ name, onChange }) => {
+export const NameField = ({ name, success, onChange }) => {
   return (
-    <Card chained>
+    <Card chained success={success}>
       <Label htmlFor="name" expand>
         What is this payment for?
       </Label>

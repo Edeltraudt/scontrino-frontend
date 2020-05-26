@@ -3,10 +3,10 @@ import styled from "styled-components";
 import { transparentize } from "polished";
 
 import { colors } from "./../../theme";
-import { Label, Card } from "./../../shared";
+import { Label, CardBox } from "./../../shared";
 import { HiddenInput } from "./../../Forms";
 
-const Wrap = styled(Card)`
+const Wrap = styled(CardBox)`
   color: ${colors.label};
   flex: 0 0 calc(20% - ${4 / 5}rem);
   padding: 1.25rem 0.5rem;

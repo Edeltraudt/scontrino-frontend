@@ -158,6 +158,7 @@ export const NewExpenseView = ({ props }) => {
           }}
           currency={currency}
           expense={cost}
+          success={success}
         />
 
         <CategoryField
@@ -173,6 +174,7 @@ export const NewExpenseView = ({ props }) => {
             window.clearInterval(requiredTimeout);
             requiredTimeout = window.setTimeout(handleSubmit, requestDelay);
           }}
+          success={success}
         />
 
         <StatusField
