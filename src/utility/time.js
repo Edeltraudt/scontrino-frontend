@@ -14,11 +14,14 @@ export const isSameDay = (a, b) => {
     throw new Error(a, b, "are no dates.");
   }
 
-  return (
-    a.getDate() === b.getDate() &&
-    a.getMonth() === b.getMonth() &&
-    a.getFullYear() === b.getFullYear()
-  );
+  if (a && b) {
+    return (
+      a.getDate() === b.getDate() &&
+      a.getMonth() === b.getMonth() &&
+      a.getFullYear() === b.getFullYear()
+    );
+  }
+  return false;
 };
 
 export const isToday = (date) => {
@@ -31,9 +34,11 @@ export const getRelativeDateString = (date) => {
   }
 
   // Otherwise get the weekday
-  return date.toLocaleString(locale, { weekday: "long" });
+  return date ? date.toLocaleString(locale, { weekday: "long" }) : "";
 };
 
 export const getDateString = (date, showYear = false) => {
-  return date.toLocaleString(locale, { month: "long", day: "numeric" });
+  return date
+    ? date.toLocaleString(locale, { month: "long", day: "numeric" })
+    : "";
 };

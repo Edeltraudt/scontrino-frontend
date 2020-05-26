@@ -7,6 +7,7 @@ export const animations = {
      75% { transform: translateX(-3px) }
     100% { transform: translateX(0px) }
   `,
+
   blink: keyframes`
       0% { opacity: 1; }
      50% { opacity: 1; }

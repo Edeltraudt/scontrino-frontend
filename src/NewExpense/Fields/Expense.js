@@ -20,15 +20,14 @@ export const ExpenseField = ({
   const [errorPlayState, setErrorPlayState] = useState(false);
 
   const [selectedCurrency, setSelectedCurrency] = useState(props.currency);
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState(props.expense);
   const [cursorPosition, setCursorPosition] = useState(null);
 
   const inputElement = useRef(null);
 
   const handleChange = (e) => {
     if (/^[0-9]*$/g.test(e.target.value)) {
-      setAmount(e.target.value);
-      onExpenseChange(parseFloat(e.target.value) / 100);
+      onExpenseChange(e.target.value);
       setCursorPosition(e.target.selectionStart);
     } else {
       setErrorPlayState(true);
@@ -58,6 +57,10 @@ export const ExpenseField = ({
   useEffect(() => {
     inputElement.current.focus();
   }, []);
+
+  useEffect(() => {
+    setAmount(props.expense);
+  }, [props.expense])
 
   return (
     <Card active chained>

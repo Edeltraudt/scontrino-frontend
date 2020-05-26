@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 import { Button } from "./../../shared";
@@ -56,6 +56,10 @@ export const Datepicker = ({ id, onChange, ...props }) => {
   const handleNextDayClick = (e) => {
     modifyDate(time.day);
   };
+
+  useEffect(() => {
+    setDate(props.date);
+  }, [props.date])
 
   return (
     <Wrap>

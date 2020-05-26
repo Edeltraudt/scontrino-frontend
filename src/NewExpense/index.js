@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 
 import { Title, Button } from "./../shared";
@@ -51,6 +51,8 @@ const categories = [
 ];
 
 export const NewExpenseView = ({ props }) => {
+  const formRef = useRef();
+
   const requestDelay = 750;
 
   const [isLoading, setIsLoading] = useState(false);
@@ -61,18 +63,18 @@ export const NewExpenseView = ({ props }) => {
   let requiredTimeout = null;
   let extraTimeout = null;
 
-  let cost = 0.0;
-  let currency = "EUR";
-  let category = categories[0].label.toLowerCase();
-  let name = "";
+  const [cost, setCost] = useState("");
+  const [category, setCategory] = useState(categories[0].label.toLowerCase());
+  const [date, setDate] = useState(new Date());
 
-  let date = new Date();
+  let currency = "EUR";
+  let name = "";
   let sharing = parseFloat(0.01);
   let notes = "";
 
   const getBody = () => ({
     id,
-    cost,
+    cost: parseFloat(cost / 100),
     currency,
     category,
     // TODO: remove string modifications once API allows non-lowercase
@@ -81,6 +83,13 @@ export const NewExpenseView = ({ props }) => {
     sharing,
     notes,
   });
+
+  const clearValues = () => {
+    setId(null);
+    setCost("");
+    setCategory(categories[0].label.toLowerCase());
+    setDate(new Date());
+  };
 
   const handleSuccess = (res) => {
     window.setTimeout(() => {
@@ -115,20 +124,34 @@ export const NewExpenseView = ({ props }) => {
       window.clearTimeout(extraTimeout);
       extraTimeout = window.setTimeout(() => {
         api
-          .patch("/expenses", getBody())
+          .patch(`/expenses/${id}`, getBody())
           .then(handleSuccess)
           .catch(handleError);
       }, requestDelay);
     }
   };
 
+  const handleDelete = (e) => {
+    e.preventDefault();
+
+    if (id) {
+      api
+        .delete(`/expenses/${id}`)
+        .then(handleSuccess)
+        .catch(handleError);
+    }
+
+    formRef.current.reset();
+    clearValues();
+  };
+
   return (
-    <FormWrap onSubmit={handleSubmit}>
+    <FormWrap onSubmit={handleSubmit} ref={formRef}>
       <FormHeadline>New Expense</FormHeadline>
       <Fields>
         <ExpenseField
           onExpenseChange={(value) => {
-            cost = value;
+            setCost(value);
           }}
           onCurrencyChange={(value) => {
             currency = value;
@@ -138,9 +161,7 @@ export const NewExpenseView = ({ props }) => {
         />
 
         <CategoryField
-          onChange={(value) => {
-            category = value.toLowerCase();
-          }}
+          onChange={(value) => setCategory(value.toLowerCase())}
           categories={categories}
           selected={category}
         />
@@ -164,7 +185,7 @@ export const NewExpenseView = ({ props }) => {
         <DateField
           date={date}
           onChange={(value) => {
-            date = value;
+            setDate(value);
             handleUpdate();
           }}
         />
@@ -186,7 +207,7 @@ export const NewExpenseView = ({ props }) => {
         />
 
         <ButtonWrap>
-          <Button type="button" danger alignCenter>
+          <Button onClick={handleDelete} danger alignCenter>
             Scratch all that
           </Button>
         </ButtonWrap>
