@@ -13,25 +13,22 @@ export const CardBox = styled.div`
   will-change: box-shadow;
   width: 100%;
 
-  ${({ chained }) =>
-    chained &&
+  ${({ chained, first }) =>
+    (chained && !first) &&
     `
       margin-bottom: ${0.75 * 3}rem;
+      margin-top: 0.75rem;
 
-      & + & {
-        margin-top: 0.75rem;
-
-        &::before {
-          background: ${colors.border};
-          bottom: 100%;
-          content: '';
-          display: block;
-          height: 0.75rem;
-          left: 50%;
-          margin: 0 0 0.75rem;
-          position: absolute;
-          width: 1px;
-        }
+      &::before {
+        background: ${colors.border};
+        bottom: 100%;
+        content: '';
+        display: block;
+        height: 0.75rem;
+        left: 50%;
+        margin: 0 0 0.75rem;
+        position: absolute;
+        width: 1px;
       }
     `}
 
@@ -72,8 +69,8 @@ const SuccessIcon = styled.span`
   }
 `;
 
-export const Card = ({ active, chained, pure, success, children }) => (
-  <CardBox active={active} chained={chained} pure={pure}>
+export const Card = ({ active, chained, pure, first, success, children }) => (
+  <CardBox active={active} chained={chained} pure={pure} first={first}>
     {children}
     {success && <SuccessIcon />}
   </CardBox>

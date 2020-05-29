@@ -82,7 +82,7 @@ export const Form = ({ children }) => {
               child
             ) : (
               <FocusWithin onFocus={(event) => handleFocusChange(id, true)}>
-                {child}
+                {React.cloneElement(child, { first: id === 0 })}
               </FocusWithin>
             )}
           </Field>
