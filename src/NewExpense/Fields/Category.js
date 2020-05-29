@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 import { Card } from "./../../shared";
 
-// TODO: rename
 import { Category } from "./../Category";
 
 const Row = styled.div`

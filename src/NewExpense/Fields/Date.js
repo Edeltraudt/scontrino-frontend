@@ -3,7 +3,6 @@ import React from "react";
 import { Label, Card } from "./../../shared";
 import { Form } from "./../../Forms";
 
-// TODO: rename
 import { Datepicker } from "./../Datepicker";
 
 export const DateField = ({ date, onChange }) => {
