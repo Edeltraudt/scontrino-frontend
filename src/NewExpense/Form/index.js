@@ -32,20 +32,14 @@ export const Form = ({ children }) => {
   const isMounted = useRef(false);
   const scrollPosition = useRef(0);
 
-  const observer = useRef(null);
-
   useEffect(() => {
     isMounted.current = true;
     scrollToElement(0);
   }, []);
 
-  const handleFocusChange = (id, isFocused) => {
-    if (isFocused) {
-      setActiveField(id);
-      scrollToElement(id);
-    } else {
-      setActiveField(null);
-    }
+  const handleFocusChange = (id) => {
+    setActiveField(id);
+    scrollToElement(id);
   };
 
   const scrollToElement = (id) => {
@@ -81,7 +75,7 @@ export const Form = ({ children }) => {
             {child.props.disabled ? (
               child
             ) : (
-              <FocusWithin onFocus={(event) => handleFocusChange(id, true)}>
+              <FocusWithin onFocus={(event) => handleFocusChange(id)}>
                 {React.cloneElement(child, { first: id === 0 })}
               </FocusWithin>
             )}
