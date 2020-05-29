@@ -9,6 +9,8 @@ export const CardBox = styled.div`
   margin: auto;
   padding: 8% 10%;
   position: relative;
+  transition: 0.15s ease box-shadow;
+  will-change: box-shadow;
   width: 100%;
 
   ${({ chained }) =>
@@ -38,7 +40,7 @@ export const CardBox = styled.div`
     pure &&
     `
       background: transparent;
-      box-shadow: none;
+      box-shadow: none !important;
       display: flex;
       flex-flow: row wrap;
       margin-bottom: ${0.75 * 3 + 0.25}rem;
@@ -59,12 +61,12 @@ const SuccessIcon = styled.span`
   width: 1em;
 
   &::before {
-    content: '';
+    content: "";
     border-bottom: 0.075em solid;
     border-left: 0.075em solid;
     height: 0.15em;
     transform: translateY(-1px) rotate(-45deg);
-    content: '';
+    content: "";
     margin: auto;
     width: 0.4em;
   }

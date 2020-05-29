@@ -14,6 +14,7 @@ import {
   NotesField,
   StatusField,
 } from "./Fields";
+import { Form } from "./Form";
 
 import { ReactComponent as EssentialsIcon } from "./../shared/icons/essentials.svg";
 import { ReactComponent as LifestyleIcon } from "./../shared/icons/lifestyle.svg";
@@ -24,16 +25,38 @@ import { ReactComponent as WorkIcon } from "./../shared/icons/work.svg";
 const FormWrap = styled.form`
   display: grid;
   grid-gap: 4vw;
-  grid-template: auto / 1fr 45rem 1fr;
-  padding: calc(2rem + 4vw);
+  justify-content: center;
+  padding: calc(2rem + 4vw) 1rem;
+
+  @media only screen and (min-width: 64em) {
+    grid-template-columns: auto 1fr;
+    justify-content: start;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  @media only screen and (min-width: 87.5em) {
+    grid-template-columns: 1fr 45rem 1fr;
+  }
+
+  @media only screen and (orientation: landscape) and (min-width: 87.5em) {
+    padding-bottom: 50vh;
+    padding-top: 50vh;
+  }
 `;
 
 const FormHeadline = styled(Title)`
-  text-align: right;
-`;
+  align-self: start;
+  line-height: 1;
+  margin: 2.25rem 0 0;
+  text-align: center;
 
-const Fields = styled.div`
-  width: 100%;
+  @media only screen and (min-width: 64em) {
+    position: sticky;
+    top: 45vh;
+    transform: translateY(-50%);
+    text-align: right;
+  }
 `;
 
 const ButtonWrap = styled.div`
@@ -148,7 +171,7 @@ export const NewExpenseView = ({ props }) => {
   return (
     <FormWrap onSubmit={handleSubmit} ref={formRef}>
       <FormHeadline>New Expense</FormHeadline>
-      <Fields>
+      <Form>
         <ExpenseField
           onExpenseChange={(value) => {
             setCost(value);
@@ -181,6 +204,7 @@ export const NewExpenseView = ({ props }) => {
           isLoading={!id && isLoading && !success}
           success={success}
           error={!id && error}
+          disabled
         />
 
         {/* TODO: send patch-requests for each modification */}
@@ -213,7 +237,7 @@ export const NewExpenseView = ({ props }) => {
             Scratch all that
           </Button>
         </ButtonWrap>
-      </Fields>
+      </Form>
     </FormWrap>
   );
 };

@@ -10,6 +10,7 @@ const Wrap = styled.div`
   flex-direction: column;
   height: 3.75rem;
   justify-content: center;
+  pointer-events: none;
   position: relative;
   width: 100%;
 `;

@@ -1,13 +1,27 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
+import styled from "styled-components";
 
 import { Label, Card } from "./../../shared";
 import { Form, Textarea } from "./../../Forms";
 
 import { ReactComponent as NotesIcon } from "./../../shared/icons/edit.svg";
 
+const TextareaWrap = styled.div`
+  opacity: 0;
+  position: absolute;
+  transition: 0s ease opacity;
+  transition-property: opacity, visibility;
+
+  ${({ active }) => active && `
+      opacity: 1;
+      position: static;
+      transition-duration: 0.15s;
+      width: 100%;
+    `}
+`;
+
 export const NotesField = ({ notes, onChange, ...props }) => {
   const [showField, setShowField] = useState(false);
-  const inputRef = useRef(null);
 
   return (
     <Card chained>
@@ -16,7 +30,9 @@ export const NotesField = ({ notes, onChange, ...props }) => {
         <span>Notes</span>
       </Label>
       <Form.Row>
-        {(showField || (inputRef.current && inputRef.current.value)) && (
+        <TextareaWrap
+          active={showField}
+        >
           <Textarea
             id="notes"
             small
@@ -25,9 +41,8 @@ export const NotesField = ({ notes, onChange, ...props }) => {
             onFocus={(e) => setShowField(true)}
             onBlur={(e) => setShowField(false)}
             defaultValue={notes}
-            ref={inputRef}
           />
-        )}
+        </TextareaWrap>
       </Form.Row>
     </Card>
   );
