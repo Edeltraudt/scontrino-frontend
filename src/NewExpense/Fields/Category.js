@@ -19,7 +19,7 @@ export const CategoryField = ({ categories, selected, onChange }) => {
   return (
     <Row>
       <Card pure chained>
-        {categories.map((category, index) => (
+        {categories.map((category) => (
           <Category
             name="category"
             id={`cat-${category.label.toLowerCase()}`}

@@ -64,25 +64,21 @@ const LightswitchLabel = styled(Label)`
 export const Lightswitch = ({ label, id, checked, onChange }) => {
   const [isChecked, setIsChecked] = useState(checked);
 
-  const handleChange = ({ target: { checked } }) => {
-    setIsChecked(checked);
+  const handleChange = (e) => {
+    setIsChecked(e.target.checked);
 
     if (onChange) {
-      onChange(checked);
+      onChange(e.target.checked);
     }
   };
 
   return (
-    <div>
-      <RealInput
-        type="checkbox"
-        id={id}
-        onChange={handleChange}
-      />
+    <>
+      <RealInput type="checkbox" id={id} onChange={handleChange} />
       <LightswitchLabel htmlFor={id}>
         <FakeSwitch checked={isChecked} />
         <span>{label}</span>
       </LightswitchLabel>
-    </div>
+    </>
   );
 };
