@@ -32,20 +32,14 @@ export const Form = ({ children }) => {
   const isMounted = useRef(false);
   const scrollPosition = useRef(0);
 
-  const observer = useRef(null);
-
   useEffect(() => {
     isMounted.current = true;
     scrollToElement(0);
   }, []);
 
-  const handleFocusChange = (id, isFocused) => {
-    if (isFocused) {
-      setActiveField(id);
-      scrollToElement(id);
-    } else {
-      setActiveField(null);
-    }
+  const handleFocusChange = (id) => {
+    setActiveField(id);
+    scrollToElement(id);
   };
 
   const scrollToElement = (id) => {
@@ -68,25 +62,49 @@ export const Form = ({ children }) => {
     }
   };
 
+  const focusNextInput = (nextId) => {
+    const input = itemRefs.current[nextId]
+      .querySelector('input:checked, input, textarea, button');
+
+    if (input) {
+      handleFocusChange(nextId);
+      input.focus();
+    } else {
+      focusNextInput(nextId + 1)
+    }
+  }
+
+  const handleKeyUp = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      focusNextInput(activeField + 1);
+    }
+  }
+
   return (
     <Wrap ref={wrapRef}>
       {children &&
-        React.Children.map(children, (child, id) => (
-          <Field
-            data-id={id}
-            active={!child.props.disabled && activeField === id}
-            key={id}
-            ref={addRef}
-          >
-            {child.props.disabled ? (
-              child
-            ) : (
-              <FocusWithin onFocus={(event) => handleFocusChange(id, true)}>
-                {React.cloneElement(child, { first: id === 0 })}
-              </FocusWithin>
-            )}
-          </Field>
-        ))}
+        React.Children.map(children, (child, id) => {
+          const active = !child.props.disabled && activeField === id;
+
+          return (
+            <Field
+              data-id={id}
+              active={active}
+              onKeyUp={handleKeyUp}
+              key={id}
+              ref={addRef}
+            >
+              {child.props.disabled ? (
+                child
+              ) : (
+                <FocusWithin onFocus={(event) => handleFocusChange(id)}>
+                  {React.cloneElement(child, { active, first: id === 0 })}
+                </FocusWithin>
+              )}
+            </Field>
+          );
+        })}
     </Wrap>
   );
 };
