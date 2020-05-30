@@ -147,7 +147,7 @@ export const NewExpenseView = ({ props }) => {
       window.clearTimeout(extraTimeout);
       extraTimeout = window.setTimeout(() => {
         api
-          .patch(`/expenses/${id}`, getBody())
+          .put(`/expenses/${id}`, getBody())
           .then(handleSuccess)
           .catch(handleError);
       }, requestDelay);
@@ -169,7 +169,7 @@ export const NewExpenseView = ({ props }) => {
   };
 
   return (
-    <FormWrap onSubmit={handleSubmit} ref={formRef}>
+    <FormWrap ref={formRef}>
       <FormHeadline>New Expense</FormHeadline>
       <Form>
         <ExpenseField
@@ -233,7 +233,7 @@ export const NewExpenseView = ({ props }) => {
         />
 
         <ButtonWrap>
-          <Button onClick={handleDelete} danger alignCenter>
+          <Button type="button" onClick={handleDelete} danger alignCenter>
             Scratch all that
           </Button>
         </ButtonWrap>
