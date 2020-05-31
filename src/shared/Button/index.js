@@ -1,14 +1,14 @@
 import styled from "styled-components";
 import { lighten, darken, transparentize, saturate } from "polished";
 
-import { base, colors } from "./../../theme";
+import { misc, colors } from "./../../theme";
 
 const hoverBackground = darken(0.04, colors.buttonBackground);
 const activeBackground = darken(0.08, colors.buttonBackground);
 
 export const Button = styled.button`
   background: ${colors.buttonBackground};
-  border-radius: ${base.radiusSmall};
+  border-radius: ${misc.radiusSmall};
   border: 0;
   color: ${colors.text};
   cursor: pointer;

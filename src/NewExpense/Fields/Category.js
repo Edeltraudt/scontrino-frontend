@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { Card } from "./../../shared";
 
-import { Category } from "./../Category";
+import { CategoryItem } from "./../CategoryItem";
 
 const Row = styled.div`
   margin: -0.5rem;
@@ -20,7 +20,7 @@ export const CategoryField = ({ categories, selected, onChange }) => {
     <Row>
       <Card pure>
         {categories.map((category) => (
-          <Category
+          <CategoryItem
             name="category"
             id={`cat-${category.label.toLowerCase()}`}
             checked={

@@ -2,17 +2,21 @@ import React from "react";
 import styled from "styled-components";
 import { mix } from "polished";
 
-import { base, colors, animations } from "./../../theme";
+import { misc, colors, animations } from "./../../theme";
 
 export const CardBox = styled.div`
   background: ${colors.background};
-  border-radius: ${base.radius};
+  border-radius: ${misc.radius};
   margin: auto;
-  padding: 8% 10%;
+  padding: 8% calc(0.75rem + 5vw);
   position: relative;
   transition: 0.15s ease box-shadow;
   will-change: box-shadow;
   width: 100%;
+
+  @media only screen and (min-width: 768px) {
+    padding: 8% 10%;
+  }
 
   /* Flat card just serves as a wrapper */
   ${({ pure }) =>
@@ -22,7 +26,7 @@ export const CardBox = styled.div`
       box-shadow: none !important;
       display: flex;
       flex-flow: row wrap;
-      padding: 0;
+      padding: 0 !important;
     `}
 `;
 

@@ -1,6 +1,8 @@
 import { createGlobalStyle } from "styled-components";
 
-import { bodyBackground, font, colors } from "./index";
+import { font, colors } from "./index";
+
+export const bodyBackground = `linear-gradient(150deg, #F3F3F7 5%, #FFFFFF 90%)`;
 
 const GlobalStyles = createGlobalStyle`
   html {
