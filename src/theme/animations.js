@@ -14,4 +14,9 @@ export const animations = {
      60% { opacity: 0; }
      90% { opacity: 0; }
   `,
+
+  rotate: keyframes`
+      0% { transform: rotate(0deg) }
+    100% { transform: rotate(360deg) }
+  `
 };

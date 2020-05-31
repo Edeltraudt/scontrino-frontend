@@ -1,18 +1,9 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 
-import { colors } from "./../../theme";
-
-const rotate = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-`;
+import { colors, animations } from "./../../theme";
 
 export const Loader = styled.div`
-  animation: ${rotate} 0.75s linear infinite paused;
+  animation: ${animations.rotate} 0.75s linear infinite paused;
   border: 0.125em solid transparent;
   border-left-color: ${colors.primary};
   border-radius: 1em;
