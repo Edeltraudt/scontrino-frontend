@@ -153,7 +153,6 @@ export const NewExpenseView = ({ props }) => {
   };
 
   const handleUpdate = (inputId) => {
-    const id = 33;
     window.clearTimeout(extraTimeout.current);
 
     if (id) {

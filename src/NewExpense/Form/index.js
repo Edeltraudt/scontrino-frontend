@@ -46,7 +46,7 @@ export const Form = ({ children }) => {
 
   useEffect(() => {
     isMounted.current = true;
-    scrollToElement(4);
+    scrollToElement(0);
   }, []);
 
   const handleFocusChange = (id) => {
