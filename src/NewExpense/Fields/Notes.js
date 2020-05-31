@@ -20,11 +20,11 @@ const TextareaWrap = styled.div`
     `}
 `;
 
-export const NotesField = ({ notes, onChange, ...props }) => {
+export const NotesField = ({ success, loading, notes, onChange, ...props }) => {
   const [showField, setShowField] = useState(false);
 
   return (
-    <Card chained>
+    <Card success={success} loading={loading}>
       <Label htmlFor="notes" onClick={(e) => setShowField(true)} expand>
         <NotesIcon />
         <span>Notes</span>

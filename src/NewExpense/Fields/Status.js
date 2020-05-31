@@ -53,7 +53,7 @@ export const StatusField = ({
   ...props
 }) => {
   return (
-    <Card pure chained>
+    <Card pure>
       <Wrap>
         <StatusLoader active={isLoading} />
 

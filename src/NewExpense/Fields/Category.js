@@ -18,7 +18,7 @@ export const CategoryField = ({ categories, selected, onChange }) => {
 
   return (
     <Row>
-      <Card pure chained>
+      <Card pure>
         {categories.map((category) => (
           <Category
             name="category"

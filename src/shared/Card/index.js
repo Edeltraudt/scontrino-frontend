@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { mix } from "polished";
 
-import { base, colors } from "./../../theme";
+import { base, colors, animations } from "./../../theme";
 
 export const CardBox = styled.div`
   background: ${colors.background};
@@ -13,25 +14,6 @@ export const CardBox = styled.div`
   will-change: box-shadow;
   width: 100%;
 
-  ${({ chained, first }) =>
-    (chained && !first) &&
-    `
-      margin-bottom: ${0.75 * 3}rem;
-      margin-top: 0.75rem;
-
-      &::before {
-        background: ${colors.border};
-        bottom: 100%;
-        content: '';
-        display: block;
-        height: 0.75rem;
-        left: 50%;
-        margin: 0 0 0.75rem;
-        position: absolute;
-        width: 1px;
-      }
-    `}
-
   /* Flat card just serves as a wrapper */
   ${({ pure }) =>
     pure &&
@@ -40,38 +22,79 @@ export const CardBox = styled.div`
       box-shadow: none !important;
       display: flex;
       flex-flow: row wrap;
-      margin-bottom: ${0.75 * 3 + 0.25}rem;
       padding: 0;
     `}
 `;
 
-const SuccessIcon = styled.span`
+const Icon = styled.span`
+  animation: ${animations.rotate} 0.75s linear infinite;
   background: ${colors.success};
   border-radius: 50%;
+  border: 0.075em solid ${mix(0.8, colors.successInvert, colors.success)};
+  border-left-color: ${colors.success};
+  box-sizing: content-box;
   color: ${colors.successInvert};
   display: flex;
-  font-size: 2rem;
+  font-size: 1.75rem;
   height: 1em;
+  opacity: 0;
   position: absolute;
   right: 1rem;
   top: 1rem;
+  transition: 0.15s ease;
+  transition-property: border-color, opacity, visibility;
+  visibility: hidden;
   width: 1em;
 
   &::before {
+    background: currentColor;
+    border-radius: inherit;
     content: "";
+    height: 100%;
+    position: absolute;
+    transition: transform 0.2s ease;
+    width: 100%;
+  }
+
+  &::after {
     border-bottom: 0.075em solid;
     border-left: 0.075em solid;
-    height: 0.15em;
-    transform: translateY(-1px) rotate(-45deg);
     content: "";
+    content: "";
+    height: 0.15em;
     margin: auto;
+    position: relative;
+    transform: translateY(-1px) rotate(-45deg);
     width: 0.4em;
   }
+
+  ${({ visible }) => visible && `
+      opacity: 1;
+      visibility: visible;
+    `}
+
+  ${({ success }) =>
+    success &&
+    `
+      animation: none;
+      border-color: ${colors.success};
+
+      &::before {
+        transform: scale(0);
+      }
+    `}
 `;
 
-export const Card = ({ active, chained, pure, first, success, children }) => (
-  <CardBox active={active} chained={chained} pure={pure} first={first}>
+export const Card = ({
+  active,
+  pure,
+  first,
+  success,
+  loading,
+  children,
+}) => (
+  <CardBox active={active} pure={pure}>
     {children}
-    {success && <SuccessIcon />}
+    <Icon success={success} visible={loading || success} />
   </CardBox>
 );

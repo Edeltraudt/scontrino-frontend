@@ -5,7 +5,7 @@ import { Input, Form } from "./../../Forms";
 
 export const NameField = ({ name, success, onChange }) => {
   return (
-    <Card chained success={success}>
+    <Card success={success}>
       <Label htmlFor="name" expand>
         What is this payment for?
       </Label>

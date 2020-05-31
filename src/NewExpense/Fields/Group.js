@@ -3,12 +3,18 @@ import React, { useState } from "react";
 import { Card } from "./../../shared";
 import { Form, Range, Lightswitch } from "./../../Forms";
 
-export const GroupField = ({ onChange, sharing, ...props }) => {
+export const GroupField = ({
+  success,
+  loading,
+  onChange,
+  sharing,
+  ...props
+}) => {
   const [isSharing, setIsSharing] = useState(false);
   const [value, setValue] = useState(0);
 
   return (
-    <Card chained>
+    <Card success={success} loading={loading}>
       <Form.Row>
         <Lightswitch
           id="sharing"

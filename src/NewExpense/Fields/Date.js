@@ -5,9 +5,9 @@ import { Form } from "./../../Forms";
 
 import { Datepicker } from "./../Datepicker";
 
-export const DateField = ({ date, onChange }) => {
+export const DateField = ({ success, loading, date, onChange }) => {
   return (
-    <Card chained>
+    <Card success={success} loading={loading}>
       <Label htmlFor="date" expand>
         {/* TODO: wording */}
         From when is this expense?

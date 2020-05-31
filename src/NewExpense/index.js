@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 
 import { Title, Button } from "./../shared";
@@ -76,15 +76,17 @@ const categories = [
 export const NewExpenseView = ({ props }) => {
   const formRef = useRef();
 
-  const requestDelay = 750;
+  const requestDelay = 400;
 
   const [isLoading, setIsLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
   const [id, setId] = useState(null);
+  const [optionalLoading, setOptionalLoading] = useState({});
+  const [optionalSuccesses, setOptionalSuccesses] = useState({});
 
-  let requiredTimeout = null;
-  let extraTimeout = null;
+  let requiredTimeout = useRef(null);
+  let extraTimeout = useRef(null);
 
   const [cost, setCost] = useState("");
   const [category, setCategory] = useState(categories[0].label.toLowerCase());
@@ -101,7 +103,7 @@ export const NewExpenseView = ({ props }) => {
     currency,
     category,
     // TODO: remove string modifications once API allows non-lowercase
-    name: name.toLowerCase().replace(" ", ""),
+    name: name,
     date: date.toISOString().slice(0, 10),
     sharing,
     notes,
@@ -113,6 +115,14 @@ export const NewExpenseView = ({ props }) => {
     setCategory(categories[0].label.toLowerCase());
     setDate(new Date());
   };
+
+  useEffect(() => {
+    setOptionalSuccesses({
+      date: false,
+      sharing: false,
+      notes: false,
+    });
+  }, []);
 
   const handleSuccess = (res) => {
     window.setTimeout(() => {
@@ -142,13 +152,21 @@ export const NewExpenseView = ({ props }) => {
       .catch(handleError);
   };
 
-  const handleUpdate = () => {
+  const handleUpdate = (inputId) => {
+    const id = 33;
+    window.clearTimeout(extraTimeout.current);
+
     if (id) {
-      window.clearTimeout(extraTimeout);
-      extraTimeout = window.setTimeout(() => {
+      setOptionalLoading({ ...optionalSuccesses, [inputId]: true });
+      setOptionalSuccesses({ ...optionalSuccesses, [inputId]: false });
+
+      extraTimeout.current = window.setTimeout(() => {
         api
           .put(`/expenses/${id}`, getBody())
-          .then(handleSuccess)
+          .then((res) => {
+            setOptionalLoading({ ...optionalSuccesses, [inputId]: false });
+            setOptionalSuccesses({ ...optionalSuccesses, [inputId]: true });
+          })
           .catch(handleError);
       }, requestDelay);
     }
@@ -170,7 +188,9 @@ export const NewExpenseView = ({ props }) => {
 
   return (
     <FormWrap ref={formRef}>
-      <FormHeadline>New Expense</FormHeadline>
+      <div>
+        <FormHeadline>New Expense</FormHeadline>
+      </div>
       <Form>
         <ExpenseField
           onExpenseChange={(value) => {
@@ -194,8 +214,11 @@ export const NewExpenseView = ({ props }) => {
           name={name}
           onChange={(value) => {
             name = value;
-            window.clearInterval(requiredTimeout);
-            requiredTimeout = window.setTimeout(handleSubmit, requestDelay);
+            window.clearInterval(requiredTimeout.current);
+            requiredTimeout.current = window.setTimeout(
+              handleSubmit,
+              requestDelay
+            );
           }}
           success={success}
         />
@@ -207,29 +230,34 @@ export const NewExpenseView = ({ props }) => {
           disabled
         />
 
-        {/* TODO: send patch-requests for each modification */}
         <DateField
           date={date}
           onChange={(value) => {
             setDate(value);
-            handleUpdate();
+            handleUpdate("date");
           }}
+          success={optionalSuccesses["date"]}
+          loading={optionalLoading["date"]}
         />
 
         <GroupField
           sharing={sharing}
           onChange={(value) => {
             sharing = parseFloat(value);
-            handleUpdate();
+            handleUpdate("sharing");
           }}
+          success={optionalSuccesses["sharing"]}
+          loading={optionalLoading["sharing"]}
         />
 
         <NotesField
           notes={notes}
           onChange={(value) => {
             notes = value;
-            handleUpdate();
+            handleUpdate("notes");
           }}
+          success={optionalSuccesses["notes"]}
+          loading={optionalLoading["notes"]}
         />
 
         <ButtonWrap>
