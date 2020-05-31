@@ -48,10 +48,11 @@ const FormWrap = styled.form`
 const FormHeadline = styled(Title)`
   align-self: start;
   line-height: 1;
-  margin: 2.25rem 0 0;
+  margin: 0 0 1rem;
   text-align: center;
 
   @media only screen and (min-width: 64em) {
+    margin: 2.25rem 0 0;
     position: sticky;
     top: 45vh;
     transform: translateY(-50%);
@@ -102,8 +103,7 @@ export const NewExpenseView = ({ props }) => {
     cost: parseFloat(cost / 100),
     currency,
     category,
-    // TODO: remove string modifications once API allows non-lowercase
-    name: name,
+    name,
     date: date.toISOString().slice(0, 10),
     sharing,
     notes,

@@ -12,16 +12,17 @@ const Wrap = styled.div`
   align-items: center;
   display: flex;
   justify-content: space-between;
+  line-height: 1.125;
   margin: 1.125rem 0 0;
   position: relative;
   width: 100%;
 `;
 
 const Value = styled.strong`
-  font-size: 2rem;
+  font-size: calc(1.125rem + 0.75vw);
   font-weight: 400;
   flex: 1;
-  margin: 0 1.5rem 0.125em;
+  margin: 0 1.5rem 0.25em;
 `;
 
 const RelativeValue = styled.span`

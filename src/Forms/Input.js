@@ -11,11 +11,11 @@ const Wrap = styled.div`
   ${({ huge }) =>
     huge &&
     `
-      font-size: 4rem;
+      font-size: calc(3rem + 1vw);
       height: 1em;
     `}
 
-  ${({ large }) => large && `font-size: 2.5rem;`}
+  ${({ large }) => large && `font-size: calc(1.75rem + 0.5vw)`}
 `;
 
 const Field = styled.input`

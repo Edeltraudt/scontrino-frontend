@@ -20,6 +20,7 @@ const FakeSwitch = styled.span`
   box-sizing: content-box;
   cursor: pointer;
   height: 1.5rem;
+  flex-shrink: 0;
   margin-bottom: -2px;
   margin-right: 1.5rem;
   padding: 2px;

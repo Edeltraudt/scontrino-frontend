@@ -5,9 +5,9 @@ import { colors } from "./../../theme";
 export const Label = styled.label`
   color: ${colors.label};
   cursor: pointer;
-  font-size: 1.125rem;
+  font-size: calc(1rem + 0.125vw);
   font-weight: 500;
-  line-height: 1;
+  line-height: 1.25;
   margin: 0 0 0.25em;
 
   svg {
